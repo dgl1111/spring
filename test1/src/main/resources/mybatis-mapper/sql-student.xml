@@ -35,4 +35,12 @@
 		FROM EMP 
 	</select>
 	
+	
+	<select id="selectSubject" parameterType="hashmap" resultType="com.example.test1.model.Student">	
+		SELECT * 
+		FROM SUBJECT	
+	</select>
+	<!--mxl과 mapping 시켜주는 mapper-->
+
+	
 </mapper>

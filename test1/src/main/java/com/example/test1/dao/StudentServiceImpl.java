@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.test1.mapper.StudentMapper;
+import com.example.test1.model.Emp;
 import com.example.test1.model.Student;
+
 
 @Service
 public class StudentServiceImpl implements StudentService{
@@ -19,7 +21,7 @@ public class StudentServiceImpl implements StudentService{
 	@Override
 	public List<Student> searchStudentList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return studentMapper.selectStudentList(map);
+		return studentMapper.selectStudentList();
 	}
 
 	@Override
@@ -49,9 +51,26 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public HashMap<String, Object> searchEmp(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return studentMapper.selectEmp(map);
+	public List<Emp> searchEmp() {
+	
+		return studentMapper.selectEmp();
 	}
+
+	@Override
+	public HashMap<String, Object> searchSubject() {
+		
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Student> subject = studentMapper.selectSubject();
+		List<Student> student = studentMapper.selectStudentList();
+		
+		resultMap.put("subList", subject);
+		resultMap.put("stuList", student);
+		
+		return resultMap;
+		
+	}
+	
+
+	
 
 }

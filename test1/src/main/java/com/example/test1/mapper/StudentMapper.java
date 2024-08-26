@@ -8,9 +8,10 @@ import org.apache.ibatis.annotations.Mapper;
 import com.example.test1.model.Emp;
 import com.example.test1.model.Student;
 
+
 @Mapper
 public interface StudentMapper {
-	List<Student> selectStudentList(HashMap<String, Object> map);
+	List<Student> selectStudentList();
 	
 	Student qwer(); // mybatis에 있는 id="qwer"이랑 qwer()을 연결  
 	
@@ -18,6 +19,10 @@ public interface StudentMapper {
 	
 	List<Emp> selectEmp();
 	
+	List<Student> selectSubject();
+	
 	//여러개를 리턴받을떄는 List<>에 담아서 리턴
+	
+	//데이터를 호출하는 service
 	
 }

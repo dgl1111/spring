@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.test1.dao.StudentService;
+import com.example.test1.model.Emp;
 import com.example.test1.model.Student;
 import com.google.gson.Gson;
 
@@ -34,10 +35,18 @@ public class StudentController {
     }
 	
 	@RequestMapping("/emp.do") 
-    public String list(Model model) throws Exception{
+    public String emp(Model model) throws Exception{
 
         return "/emp-list";
     }
+	
+	@RequestMapping("/subject.do") 
+    public String subject(Model model) throws Exception{
+
+        return "/subject-list";
+    }
+	
+
 	
 	@RequestMapping(value = "/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -69,13 +78,28 @@ public class StudentController {
 		return new Gson().toJson(resultMap);
 	}
 	
-	@RequestMapping(value = "/emp.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/empList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String empList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+	public String emp(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap = studentService.searchEmp(map);	
+		
+		List<Emp> list = studentService.searchEmp();
+		resultMap.put("list", list);
+		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
+	
+	@RequestMapping(value = "/sub-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String sub_list(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		resultMap = studentService.searchSubject();
+		
+		return new Gson().toJson(resultMap);
+	}
+	
+
 }
 
 
