@@ -34,8 +34,8 @@
 			</tr>
 			<tr v-for="item in list">
 				<td>{{item.boardNo}}</td>
-				<td>{{item.title}}</td>
-				<td>{{item.userId}}</td>
+				<td><a href="javascript:;" @click="fnView(item.boardNo)">{{item.title}}</a></td>
+				<td><a href="javascript:;" @click="fnUserView(item.boardNo)">{{item.userId}}</a></td>
 				<td>{{item.hit}}</td>
 				<td>{{item.cdateTime}}</td>
 				<td><button @click="fnRemove(item.boardNo)">삭제</button></td>
@@ -80,7 +80,17 @@
 						self.fnGetList();
 					}
 				});
-			}
+			},
+			fnView(boardNo){
+				//key: boardNo, value : 내가 누른 게시글의 boardNo(pk)
+
+				$.pageChange("board-view.do", {boardNo : boardNo}); 	//jquery로 만들어놨다. 첫번째 파라미터는 url,   {key, value} 두개의 역할은 다르다.
+			},
+			fnUserView(boardNo){
+							//key: boardNo, value : 내가 누른 게시글의 boardNo(pk)
+
+							$.pageChange("user-view.do", {boardNo : boardNo}); 	//jquery로 만들어놨다. 첫번째 파라미터는 url,   {key, value} 두개의 역할은 다르다.
+						}
         },
         mounted() {
             var self = this;

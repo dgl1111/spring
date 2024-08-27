@@ -2,6 +2,8 @@ package com.example.test1.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.test1.dao.BoardService;
+import com.example.test1.dao.UserService;
 import com.google.gson.Gson;
 
 @Controller
@@ -32,6 +35,25 @@ public class BoardController {
 
         return "/board-insert";
     }
+	
+	// 게시글 상세보기
+	@RequestMapping("/board-view.do") 
+    public String boardView(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		//PK값을 받을 준비가 되어있어야 한다.   파라미터로 받고 싶으면
+		request.setAttribute("boardNo", map.get("boardNo"));
+        return "/board-view";
+        //파라미터로 받은 값을 넘겨줘야 한다. jsp에도 쓸수있게 request 객체 만든다.
+    }
+	
+	// 작성자 상세보기
+		@RequestMapping("/user-view.do") 
+	    public String userView(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+			//PK값을 받을 준비가 되어있어야 한다.   파라미터로 받고 싶으면
+			request.setAttribute("boardNo", map.get("boardNo"));
+	        return "/user-view";
+	        //파라미터로 받은 값을 넘겨줘야 한다. jsp에도 쓸수있게 request 객체 만든다.
+	    }
+	
 	
 	@RequestMapping(value = "/board-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -59,6 +81,24 @@ public class BoardController {
 		HashMap<String, Object> resultMap 
 			= new HashMap<String, Object>();
 		resultMap = boardService.addBoard(map);
+		
+		return new Gson().toJson(resultMap);
+	}
+	
+	@RequestMapping(value = "/board-view.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String board_view(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = boardService.viewBoard(map);
+		
+		return new Gson().toJson(resultMap);
+	}
+	
+	@RequestMapping(value = "/user-view.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String user_view(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = UserService.viewUser(map);
 		
 		return new Gson().toJson(resultMap);
 	}
