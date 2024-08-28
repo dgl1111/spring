@@ -3,6 +3,8 @@ package com.example.test1.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.test1.dao.UserService;
 import com.example.test1.model.User;
+
 import com.google.gson.Gson;
 
 @Controller //너 주소만드는 역할이야 annotation으로 controller 붙인다.
@@ -33,12 +36,63 @@ public class UserController {
         return "/join";	//확장자 생략
     }
 	
-	
+	@RequestMapping(value = "/user-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String userList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {	//map안에 keyword 담겨있다.
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = userService.searchUserList(map);
+		
+		return new Gson().toJson(resultMap);
+	}
 
+	@RequestMapping("/user-list.do") 
+    public String userList(Model model) throws Exception{
 
+        return "/user-list";	//확장자 생략
+    }
 	
+	@RequestMapping(value = "/boardList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String boardList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = userService.boardList(map);
+		
+		return new Gson().toJson(resultMap);
+	}
+	
+	@RequestMapping("/boardList.do") 
+    public String boardList(Model model) throws Exception{
 
+        return "/board-list";	//확장자 생략
+    }
 	
+	@RequestMapping(value = "/remove-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String userRemove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {	//map안에 keyword 담겨있다.
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = userService.removeUser(map);
+		
+		return new Gson().toJson(resultMap);
+	}
+	
+	@RequestMapping(value = "/user-view.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String userView(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = userService.userInfo(map);
+		
+		return new Gson().toJson(resultMap);
+	}
+	
+	// 작성자 상세보기
+
+	@RequestMapping("/user-view.do") 
+    public String userView(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		//PK값을 받을 준비가 되어있어야 한다.   파라미터로 받고 싶으면
+		request.setAttribute("userId", map.get("userId"));
+        return "/user-view";
+        //파라미터로 받은 값을 넘겨줘야 한다. jsp에도 쓸수있게 request 객체 만든다.
+    }
 
 }
 

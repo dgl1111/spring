@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.test1.dao.BoardService;
-import com.example.test1.dao.UserService;
 import com.google.gson.Gson;
 
 @Controller
@@ -45,14 +44,14 @@ public class BoardController {
         //파라미터로 받은 값을 넘겨줘야 한다. jsp에도 쓸수있게 request 객체 만든다.
     }
 	
-	// 작성자 상세보기
-		@RequestMapping("/user-view.do") 
-	    public String userView(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-			//PK값을 받을 준비가 되어있어야 한다.   파라미터로 받고 싶으면
-			request.setAttribute("boardNo", map.get("boardNo"));
-	        return "/user-view";
-	        //파라미터로 받은 값을 넘겨줘야 한다. jsp에도 쓸수있게 request 객체 만든다.
-	    }
+//	// 작성자 상세보기
+//		@RequestMapping("/user-view.dox") 
+//	    public String userView(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+//			//PK값을 받을 준비가 되어있어야 한다.   파라미터로 받고 싶으면
+//			request.setAttribute("boardNo", map.get("boardNo"));
+//	        return "/user-view";
+//	        //파라미터로 받은 값을 넘겨줘야 한다. jsp에도 쓸수있게 request 객체 만든다.
+//	    }
 	
 	
 	@RequestMapping(value = "/board-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
