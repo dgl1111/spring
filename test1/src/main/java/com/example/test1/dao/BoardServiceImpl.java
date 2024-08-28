@@ -60,14 +60,15 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public HashMap<String, Object> viewBoard(HashMap<String, Object> map) {	//mapper에서 호출한 결과 hashmap에 담아서 리턴
-		
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+	public HashMap<String, Object> searchBoardInfo(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap =
+				new HashMap<String, Object>();
 		try {
-			Board board = boardMapper.viewBoard(map);
-			resultMap.put("view", board);
+			Board board = boardMapper.selectBoardInfo(map);
+			resultMap.put("info", board);
 			resultMap.put("result", "success");
-			resultMap.put("message", "등록되었습니다.");
+			resultMap.put("message", "검색되었습니다.");
 		} catch (Exception e) {
 			// TODO: handle exception
 			resultMap.put("result", "fail");

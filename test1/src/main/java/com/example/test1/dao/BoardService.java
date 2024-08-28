@@ -10,6 +10,6 @@ public interface BoardService {
 	// 게시글 등록
 	HashMap<String,Object> addBoard(HashMap<String,Object> map);
 	//게시글 상세보기
-	HashMap<String,Object> viewBoard(HashMap<String,Object> map); //pk값 보내주려면 파라미터 필요.
+	HashMap<String,Object> searchBoardInfo(HashMap<String,Object> map); //pk값 보내주려면 파라미터 필요.
 	
 }

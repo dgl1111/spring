@@ -20,7 +20,7 @@
 		VALUES(BOARD_SEQ.NEXTVAL, #{title}, #{contents}, 'user1', 0, SYSDATE, SYSDATE)
 	</insert>
 	
-	<select id="viewBoard" parameterType="hashmap" resultType="com.example.test1.model.Board">
+	<select id="selectBoardInfo" parameterType="hashmap" resultType="com.example.test1.model.Board">
 		SELECT *
 		FROM TBL_BOARD
 		WHERE BOARDNO = #{boardNo}

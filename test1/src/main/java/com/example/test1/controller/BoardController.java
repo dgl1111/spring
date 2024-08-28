@@ -85,20 +85,13 @@ public class BoardController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	
 	@RequestMapping(value = "/board-view.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String board_view(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap = boardService.viewBoard(map);
-		
-		return new Gson().toJson(resultMap);
-	}
-	
-	@RequestMapping(value = "/user-view.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String user_view(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap = UserService.viewUser(map);
+		HashMap<String, Object> resultMap 
+			= new HashMap<String, Object>();
+		resultMap = boardService.searchBoardInfo(map);
 		
 		return new Gson().toJson(resultMap);
 	}

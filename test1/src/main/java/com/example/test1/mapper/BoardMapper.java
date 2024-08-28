@@ -18,7 +18,7 @@ public interface BoardMapper {
 	void insertBoard(HashMap<String, Object> map);
 	
 	//PK로 검색하면 1개. List로 감쌀 이유가 없다.
-	Board viewBoard(HashMap<String, Object> map);
+	Board selectBoardInfo(HashMap<String, Object> map);
 	
 	
 	
