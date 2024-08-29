@@ -20,7 +20,12 @@
 <body>
 	<div id="app">
 		<button @click="fnBoardList">게시글목록(userController에서 작성)</button>
-		<div>
+		<div style="margin : 20px;">
+			<select style="margin-right : 5px;" v-model="searchOption">
+				<option value="">전체</option>
+				<option value="id">아이디</option>
+				<option value="email">이메일</option>
+			</select>
 		<input placeholder="검색" v-model="keyword">
 		<button @click="fnUserList">검색</button>
 		</div>
@@ -46,14 +51,16 @@
         data() {
             return {
 				userList : [],
-				keyword : "" //변수선언
+				keyword : "", //변수선언
+				searchOption : ""
 								
             };
         },
         methods: {
 			fnUserList(){
 				var self = this;
-				var nparmap = {keyword : self.keyword}; //주소 호출하면서 원하는 값을 파라미터 넘길수있다.
+				var nparmap = {keyword : self.keyword, //주소 호출하면서 원하는 값을 파라미터 넘길수있다.
+								searchOption : self.searchOption};
 				$.ajax({
 					url:"user-list.dox", // tbl_user의 list 받을 주소만들기. controller로 url:".dox"호출
 					dataType:"json",	

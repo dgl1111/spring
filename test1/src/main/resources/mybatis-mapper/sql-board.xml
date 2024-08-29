@@ -5,8 +5,52 @@
 <mapper namespace="com.example.test1.mapper.BoardMapper">
 	<select id="selectBoardList" parameterType="hashmap" resultType="com.example.test1.model.Board">
 		SELECT *
-		FROM TBL_BOARD
-		WHERE TITLE LIKE '%' || #{keyword} || '%'
+		FROM TBL_BOARD B
+		INNER JOIN TBL_USER U ON B.USERID = U.USERID
+		WHERE 1=1	<!-- WHERE하고 FALSE면 바로 AND가 나오니깐 옳은 쿼리가 아니다. 항상 TRUE인걸 넣고 처리 -->
+		<if test="category != '' and category != null">
+			AND	CATEGORY = #{category}
+		</if>
+		
+		
+		<!--<choose>
+			<when test="category == 0">
+				
+			</when>
+			<otherwise>
+				where category = #{category}
+			</otherwise>
+		</choose>-->
+			
+		
+		
+		<!--<choose>
+			<when test="searchOption == 'title'">
+				TITLE LIKE '%' || #{keyword} || '%' 
+			</when>
+			<when test="searchOption == 'title'">
+				USERNAME LIKE '%' || #{keyword} || '%'
+			</when>
+			<otherwise>
+				TITLE LIKE '%' || #{keyword} || '%' 
+				OR USERNAME LIKE '%' || #{keyword} || '%'
+			</otherwise>
+		</choose>-->
+		
+		
+		
+		<if test="searchOption == 'all'">
+			AND(TITLE LIKE '%' || #{keyword} || '%' 
+			OR USERNAME LIKE '%' || #{keyword} || '%')
+		</if>
+		<if test="searchOption == 'title'">
+			AND(TITLE LIKE '%' || #{keyword} || '%')
+		</if>
+		<if test="searchOption == 'name'">
+			AND(USERNAME LIKE '%' || #{keyword} || '%')
+		</if>
+			
+			
 	</select>
 	
 	<delete id="deleteBoard" parameterType="hashmap">
@@ -29,5 +73,3 @@
 	
 	
 </mapper>	
-	
-	

@@ -24,6 +24,15 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
+	@RequestMapping(value = "/login.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String userLoin(Model model, @RequestParam HashMap<String, Object> map) throws Exception {	
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = userService.login(map);
+		
+		return new Gson().toJson(resultMap);
+	}
+	
 	@RequestMapping("/login.do") //"/" 주소에 요청이 들어왔을때 밑에 실행
     public String login(Model model) throws Exception{
 
@@ -38,7 +47,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/user-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String userList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {	//map안에 keyword 담겨있다.
+	public String userList2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {	//map안에 keyword 담겨있다.
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap = userService.searchUserList(map);
 		
@@ -53,7 +62,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/boardList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String boardList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+	public String boardList2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap = userService.boardList(map);
 		

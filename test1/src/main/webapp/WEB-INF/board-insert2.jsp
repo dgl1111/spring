@@ -3,10 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- Quill CDN -->
-	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-	<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-	<meta charset="UTF-8">
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
 	<title>첫번째 페이지</title>
 </head>
@@ -19,27 +15,16 @@
 		padding : 5px 5px;
 		border-collapse: collapse;
 	}
-	#editor{
-		height : 300px;
-	}
-	
-	#title{
-		width : 500px;
-	}
 </style>
 <body>
-	
 	<div id="app">
-		<table>
-			<tr>
-				<th>제목</th>
-				<td> <input id="title" type="text" placeholder="제목" v-model="title"></td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td><div id="editor"></div></td>
-			</tr>
-		</table>
+		<div>
+			제목 : <input type="text" placeholder="제목" v-model="title">
+		</div>
+		<br>
+		<div>
+			내용 : <textarea cols="30" rows="5" v-model="contents"></textarea>
+		</div>
 		<button @click="fnSave">저장</button>
 	</div>
 </body>
@@ -90,7 +75,7 @@
 
 	        // 에디터 내용이 변경될 때마다 Vue 데이터를 업데이트
 	        quill.on('text-change', function() {
-	        self.contents = quill.root.innerHTML;
+	        app.contents = quill.root.innerHTML;
         });
         }
     });

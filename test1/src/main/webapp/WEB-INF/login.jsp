@@ -12,9 +12,12 @@
 <body>
 	<div id="app">
 		<div>
-			아이디 : <input placeholder="아이디">
-			<button>중복체크</button>
+			아이디 : <input type="text" v-model="id">
+		</div>	
+		<div>
+			비밀번호 : <input type="text" v-model="pwd">
 		</div>
+		<button @click="fnLog">로그인</button>
 	</div>
 </body>
 </html>
@@ -22,11 +25,34 @@
     const app = Vue.createApp({
         data() {
             return {
-				
+				id : "",
+				pwd : ""
             };
         },
         methods: {
-			
+			fnLog(){
+				var self = this;
+				var nparmap = {
+					id : self.id,
+					pwd :  self.pwd	
+				};
+				$.ajax({
+					url:"login.dox", 
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) {  
+						console.log(data);
+						if(data.code == 200){
+							$.pageChange("board-list.do",{});
+						}else{
+							alert(data.message);
+						}
+							
+					}
+					
+				});
+			},
         },
         mounted() {
 			

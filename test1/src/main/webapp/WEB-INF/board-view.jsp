@@ -12,7 +12,7 @@
 <body>
 	<div id="app">
 		제목 : {{info.title}}<br>
-		내용 : {{info.contents}}
+		내용 : <div v-html="info.contents"></div>
 	</div>
 </body>
 </html>

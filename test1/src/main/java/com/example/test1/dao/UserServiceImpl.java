@@ -17,8 +17,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserMapper userMapper;
 	// 하나만 만들어서 다 처리 해준다.
-	@Autowired
-	BoardMapper boardMapper;
 //	@Override
 //	public List<User> searchUserList(HashMap<String, Object> map) {
 //		// TODO Auto-generated method stub
@@ -127,4 +125,34 @@ public class UserServiceImpl implements UserService {
 		return resultMap;
 	}
 
+	@Override
+	public HashMap<String, Object> login(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+		try {
+			User u = userMapper.userLogin(map);
+			
+			if(u == null) {	//아이디나 비밀번호가 틀렸다.(null이다)
+				resultMap.put("code", 400);
+				User idCheck = userMapper.selectUser(map); 
+				if(idCheck == null) {	//아이디가 틀렸다.(id가 null이다)
+					resultMap.put("message", "아이디가 틀렸다");
+				}else {
+					resultMap.put("message", "비밀번호가 틀렸다");
+				}
+					
+			}else { //로그인 성공
+				resultMap.put("code", 200);
+			}
+			
+		} catch (Exception e) {
+
+			resultMap.put("result", "fail");
+			resultMap.put("message", "db조회 오류");
+
+		}
+		return resultMap;
+
+		}
+	
 }

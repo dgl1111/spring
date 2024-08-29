@@ -2,22 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.test1.mapper.UserMapper">
-	<!--<select id="selectUserList" parameterType="hashmap" resultType="com.example.test1.model.User">
-		SELECT
-			USERID,
-			PWD,
-			USERNAME,
-			PHONE,
-			EMAIL,
-			GENDER
-		FROM STUDENT
-	</select>-->
-	
+<mapper namespace="com.example.test1.mapper.UserMapper">	
 	<select id="selectUser" parameterType="hashmap" resultType="com.example.test1.model.User">	
 		SELECT * 
-		FROM USER 
-		WHERE USERID = ${userId} 
+		FROM TBL_USER 
+		WHERE USERID = #{id} 
 	</select>
 	
 	<select id="infoUser" parameterType="hashmap" resultType="com.example.test1.model.User">	
@@ -29,10 +18,20 @@
 	<select id="selectUserList" parameterType="hashmap" resultType="com.example.test1.model.User">	
 		SELECT * 
 		FROM TBL_USER
-		WHERE USERID LIKE '%' || #{keyword} || '%' <!--하나의 문자열로 인식하기 때문에 ||로 이어준다.-->
+		WHERE 1=1
+			<if test="searchOption == ''"> 	
+				AND (USERID LIKE '%' || #{keyword} || '%' OR EMAIL LIKE '%' || #{keyword} || '%')
+			</if>
+			<if test="searchOption == 'id'">
+				AND (USERID LIKE '%' || #{keyword} || '%')
+			</if>
+			<if test="searchOption == 'email'">
+				AND (EMAIL LIKE '%' || #{keyword} || '%')
+			</if>
+			<!--USERID LIKE '%' || #{keyword} || '%' 하나의 문자열로 인식하기 때문에 ||로 이어준다.-->
 	</select>
 	
-	<delete id="removeUserList" parameterType="hashmap">	<!-- userId담을거니깐 파라미터 필요,  삭제,수정은 return 타입 필요없다.-->
+	<delete id="removeUserList" parameterType="hashmap">	<!-- userId 담을거니깐 파라미터 필요,  삭제,수정은 return 타입 필요없다.-->
 		DELETE
 		FROM TBL_USER
 		WHERE USERID = #{userId}
@@ -46,7 +45,15 @@
 	<select id="userInfoList" parameterType="hashmap" resultType="com.example.test1.model.User">	
 		SELECT * 
 		FROM TBL_USER 
-		WHERE USERID = #{userId}
+		WHERE 
+		USERID = #{userId}
+	</select>
+	
+	<select id="userLogin" parameterType="hashmap" resultType="com.example.test1.model.User">	
+		SELECT * 
+		FROM TBL_USER 
+		WHERE 
+		USERID = #{id} AND PWD = #{pwd}
 	</select>
 	
 	
