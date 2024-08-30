@@ -8,15 +8,32 @@
 	<title>첫번째 페이지</title>
 </head>
 <style>
+	table {
+		margin : 20px;
+	}
+	table, tr, th, td {
+		border : 1px solid black;
+		padding : 5px 5px;
+		border-collapse: collapse;
+	}
 </style>
 <body>
 	<div id="app">
-		제목 : {{info.title}}<br>
-		내용 : <div v-html="info.contents"></div>
-		작성자 : <span>{{info.userId}}</span>
-		<div v-if="sessionId == info.userId || sessionStatus == 'A'">
-			<button @click="fnRemove()">삭제</button>
-		</div>
+		<table>
+			<tr>
+				<th>학생 학번</th>
+				<th>이름</th>
+				<th>아이디</th>
+				<th>학년</th>
+			</tr>
+			<tr>
+				<td>{{info.stuNo}}</td>
+				<td>{{info.name}}</td>
+				<td>{{info.id}}</td>
+				<td>{{info.grade}}</td>
+			</tr>	
+		</table>
+		<div><button @click="fnUpdate(info.stuNo)">수정</button></div>
 	</div>
 </body>
 </html>
@@ -24,18 +41,17 @@
     const app = Vue.createApp({
         data() {
             return {
-				boardNo : '${boardNo}',
-				info : {},
-				sessionId : '${sessionId}',
-				sessionStatus : '${sessionStatus}'
+				stuNo : '${stuNo}',
+				info : {}
+				
             };
         },
         methods: {
-			fnGetInfo(){
+			fnGetStu(){
 				var self = this;
-				var nparmap = {boardNo : self.boardNo};
+				var nparmap = { stuNo : self.stuNo };
 				$.ajax({
-					url:"board-view.dox",
+					url:"stu-schoolView.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
@@ -44,27 +60,28 @@
 						self.info = data.info;
 					}
 				});
-            },
-			
-			fnRemove(){
+	           },
+			   
+		   fnUpdate(stuNo) {
 				var self = this;
-				var nparmap = {};
+				var nparmap = {stuNo : stuNo};
 				$.ajax({
-					url:"board-remove.dox",
+					url:"schoolStu-update.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						console.log(data);
 						alert(data.message);
 						self.fnGetList();
 					}
 				});
-			}
+		},
+		
         },
         mounted() {
 			var self = this;
-			self.fnGetInfo();
+			self.fnGetStu();
+            
         }
     });
     app.mount('#app');

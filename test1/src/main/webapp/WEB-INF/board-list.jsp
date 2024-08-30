@@ -46,12 +46,15 @@
 			<tr v-for="item in list">
 				<td>{{item.boardNo}}</td>
 				<td><a href="javascript:;" @click="fnView(item.boardNo)">{{item.title}}</a></td>
-				<td><a href="javascript:;" @click="fnUserView(item.boardNo)">{{item.userId}}</a></td>
+				<td><a href="javascript:;" @click="fnUserView(item.boardNo)">{{item.userName}}</a></td>
 				<td>{{item.hit}}</td>
 				<td>{{item.cdateTime}}</td>
-				<td><button @click="fnRemove(item.boardNo)">삭제</button></td>
+				<td><button v-if="sessionEmail == item.email || sessionStatus == 'A'"  @click="fnRemove(item.boardNo)">삭제</button></td>
 			</tr>	
 		</table>
+		<div>
+			<button @click="fnInsert">글쓰기</button>
+		</div>
 	</div>
 </body>
 </html>
@@ -62,7 +65,11 @@
 				list : [],
 				keyword : "",
 				searchOption : "all",
-				category : ""
+				category : "",
+				sessionId : '${sessionId}',
+				sessionEmail : '${sessionEmail}',
+				sessionStatus : '${sessionStatus}'
+				
             };
         },
         methods: {
@@ -113,6 +120,9 @@
 				//key: boardNo, value : 내가 누른 게시글의 boardNo(pk)
 
 				$.pageChange("user-view.do", {boardNo : boardNo}); 	//jquery로 만들어놨다. 첫번째 파라미터는 url,   {key, value} 두개의 역할은 다르다.
+			},
+			fnInsert(){
+				$.pageChange("board-insert.do", {boardNo : boardNo});
 			}
         },
         mounted() {

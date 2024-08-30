@@ -3,6 +3,8 @@ package com.example.test1.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,10 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserMapper userMapper;
 	// 하나만 만들어서 다 처리 해준다.
+	
+	@Autowired
+	HttpSession session;
+	
 //	@Override
 //	public List<User> searchUserList(HashMap<String, Object> map) {
 //		// TODO Auto-generated method stub
@@ -143,6 +149,12 @@ public class UserServiceImpl implements UserService {
 					
 			}else { //로그인 성공
 				resultMap.put("code", 200);
+				resultMap.put("message", "로그인 성공");
+				session.setAttribute("sessionId", u.getUserId());
+				session.setAttribute("sessionName", u.getUserName());
+				session.setAttribute("sessionStatus", u.getStatus());
+				session.setAttribute("sessionEmail", u.getEmail());
+				
 			}
 			
 		} catch (Exception e) {
