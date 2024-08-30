@@ -29,7 +29,8 @@
 			<tr>
 				<td>{{info.stuNo}}</td>
 				<td>{{info.name}}</td>
-				<td>{{info.id}}</td>
+				<td v-if="!isUpdate">{{info.id}}</td>
+				<td v-else ><input type="text" v-model="info.id"></td>
 				<td>{{info.grade}}</td>
 			</tr>	
 		</table>
@@ -42,8 +43,8 @@
         data() {
             return {
 				stuNo : '${stuNo}',
-				info : {}
-				
+				info : {},
+				isUpdate : false
             };
         },
         methods: {
@@ -60,23 +61,11 @@
 						self.info = data.info;
 					}
 				});
-	           },
-			   
+	       },  
 		   fnUpdate(stuNo) {
-				var self = this;
-				var nparmap = {stuNo : stuNo};
-				$.ajax({
-					url:"schoolStu-update.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						alert(data.message);
-						self.fnGetList();
-					}
-				});
-		},
-		
+			
+				this.isUpdate = !this.isUpdate;
+			}
         },
         mounted() {
 			var self = this;
