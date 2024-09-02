@@ -19,7 +19,12 @@ public class SchoolServiceImpl implements SchoolService{
 	@Override
 	public HashMap<String, Object> searchSchoolList(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		System.out.println(map);
 		List<School> list = schoolMapper.selectSchool(map);
+		int count = schoolMapper.selectSchoolCnt(map);
+		
+		
+		resultMap.put("count", count);
 		resultMap.put("list", list);
 		resultMap.put("result", "success");
 		

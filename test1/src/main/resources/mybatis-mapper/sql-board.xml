@@ -49,6 +49,9 @@
 		<if test="searchOption == 'name'">
 			AND(USERNAME LIKE '%' || #{keyword} || '%')
 		</if>
+		
+		ORDER BY CDATETIME DESC, BOARDNO DESC
+		OFFSET #{startIndex} ROWS FETCH FIRST #{outputNumber} ROWS ONLY
 			
 			
 	</select>
@@ -68,6 +71,27 @@
 		SELECT *
 		FROM TBL_BOARD
 		WHERE BOARDNO = #{boardNo}
+	</select>
+	
+	<select id="selectBoardListCnt" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*)
+		FROM TBL_BOARD B
+		INNER JOIN TBL_USER U ON B.USERID = U.USERID 
+		WHERE 1=1	<!-- WHERE하고 FALSE면 바로 AND가 나오니깐 옳은 쿼리가 아니다. 항상 TRUE인걸 넣고 처리 -->
+		<if test="category != '' and category != null">
+			AND	CATEGORY = #{category}
+		</if> 
+		<if test="searchOption == 'all'">
+			AND(TITLE LIKE '%' || #{keyword} || '%' 
+			OR USERNAME LIKE '%' || #{keyword} || '%')
+		</if>
+		<if test="searchOption == 'title'">
+			AND(TITLE LIKE '%' || #{keyword} || '%')
+		</if>
+		<if test="searchOption == 'name'">
+			AND(USERNAME LIKE '%' || #{keyword} || '%')
+		</if>
+		
 	</select>
 	
 	

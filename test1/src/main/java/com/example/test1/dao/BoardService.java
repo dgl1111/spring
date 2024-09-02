@@ -12,4 +12,5 @@ public interface BoardService {
 	//게시글 상세보기
 	HashMap<String,Object> searchBoardInfo(HashMap<String,Object> map); //pk값 보내주려면 파라미터 필요.
 	
+	
 }

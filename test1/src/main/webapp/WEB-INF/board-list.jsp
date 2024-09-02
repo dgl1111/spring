@@ -16,6 +16,44 @@
 		padding : 5px 5px;
 		border-collapse: collapse;
 	}
+	.pagination {
+	    justify-content: center;
+	    align-items: center;
+	    margin: 20px 0;
+	}
+	.pagination button {
+	    background-color: #f8f9fa;
+	    border: 1px solid #dee2e6;
+	    color: #007bff;
+	    padding: 8px 12px;
+	    margin: 0 2px;
+	    cursor: pointer;
+	    transition: background-color 0.3s, color 0.3s;
+	    border-radius: 4px;
+	}
+
+	.pagination button:hover {
+	    background-color: #007bff;
+	    color: white;
+	}
+
+	.pagination button.active {
+	    background-color: #007bff;
+	    color: white;
+	    cursor: default;
+	}
+
+	.pagination button:disabled {
+	    background-color: #e9ecef;
+	    color: #6c757d;
+	    cursor: not-allowed;
+	    border: 1px solid #dee2e6;
+	}
+
+	.pagination button:not(.active):not(:disabled):hover {
+	    background-color: #0056b3;
+	    color: white;
+	}
 </style>
 <body>
 	<div id="app">
@@ -32,8 +70,15 @@
 				<option value="name">작성자</option>
 			</select>
 			<input placeholder="검색어" v-model="keyword">
-			<button @click="fnGetList">검색</button>
+			<button @click="fnGetList(1)">검색</button>
 		</div> 
+		<select v-model="selectSize" @change="fnGetList(1)">
+			<option value="5">5개씩</option>
+			<option value="10">10개씩</option>
+			<option value="15">15개씩</option>
+		</select>
+
+
 		<table>
 			<tr>
 				<th>게시글번호</th>
@@ -52,6 +97,15 @@
 				<td><button v-if="sessionEmail == item.email || sessionStatus == 'A'"  @click="fnRemove(item.boardNo)">삭제</button></td>
 			</tr>	
 		</table>
+		<div class="pagination">
+		    <button v-if="currentPage > 1">이전</button>
+		    <button v-for="page in totalPages" 
+			:class="{active: page == currentPage}"
+			@click="fnGetList(page)">
+		        {{ page }}
+		    </button>
+		    <button v-if="currentPage < totalPages">다음</button>
+		</div>
 		<div>
 			<button @click="fnInsert">글쓰기</button>
 		</div>
@@ -68,7 +122,11 @@
 				category : "",
 				sessionId : '${sessionId}',
 				sessionEmail : '${sessionEmail}',
-				sessionStatus : '${sessionStatus}'
+				sessionStatus : '${sessionStatus}',
+				currentPage: 1, //현재 활성화 되는 페이지      
+				pageSize: 5,        
+				totalPages: 2,
+				selectSize : 5
 				
             };
         },
@@ -79,12 +137,19 @@
 				
 				self.fnGetList();	//누르는 순간 리스트 호출. 목록가져오기
 			},
-            fnGetList(){
+            fnGetList(page){
 				var self = this;
+				self.pageSize = self.selectSize;
+				var startIndex = (page-1) * self.pageSize;
+				var outputNumber = self.pageSize;
+				self.currentPage = page;
 				var nparmap = {	//파라미터로 넘기는 값
 					keyword : self.keyword,
 					searchOption : self.searchOption,
-					category : self.category	
+					category : self.category,
+					startIndex : startIndex,
+					outputNumber : outputNumber,
+
 				};
 				$.ajax({
 					url:"board-list.dox",
@@ -94,6 +159,7 @@
 					success : function(data) { 
 						console.log(data);
 						self.list = data.list;
+						self.totalPages = Math.ceil(data.count / self.pageSize);
 					}
 				});
             },
@@ -122,12 +188,13 @@
 				$.pageChange("user-view.do", {boardNo : boardNo}); 	//jquery로 만들어놨다. 첫번째 파라미터는 url,   {key, value} 두개의 역할은 다르다.
 			},
 			fnInsert(){
-				$.pageChange("board-insert.do", {boardNo : boardNo});
+				$.pageChange("board-insert.do", {});
 			}
         },
         mounted() {
             var self = this;
-			self.fnGetList();
+			self.fnGetList(self.currentPage);
+			
         }
     });
     app.mount('#app');

@@ -16,9 +16,54 @@
 		padding : 5px 5px;
 		border-collapse: collapse;
 	}
+
+	.pagination {
+	    justify-content: center;
+	    align-items: center;
+	    margin: 20px 0;
+	}
+	.pagination button {
+	    background-color: #f8f9fa;
+	    border: 1px solid #dee2e6;
+	    color: #007bff;
+	    padding: 8px 12px;
+	    margin: 0 2px;
+	    cursor: pointer;
+	    transition: background-color 0.3s, color 0.3s;
+	    border-radius: 4px;
+	}
+
+	.pagination button:hover {
+	    background-color: #007bff;
+	    color: white;
+	}
+
+	.pagination button.active {
+	    background-color: #007bff;
+	    color: white;
+	    cursor: default;
+	}
+
+	.pagination button:disabled {
+	    background-color: #e9ecef;
+	    color: #6c757d;
+	    cursor: not-allowed;
+	    border: 1px solid #dee2e6;
+	}
+
+	.pagination button:not(.active):not(:disabled):hover {
+	    background-color: #0056b3;
+	    color: white;
+	}
 </style>
 <body>
 	<div id="app">
+		<select v-model="selectSize" @change="fnGetList(1)">
+			<option value="5">5개씩</option>
+			<option value="10">10개씩</option>
+			<option value="20">20개씩</option>
+		</select>
+
 		<table>
 			<tr>
 				<th>학번</th>
@@ -38,6 +83,14 @@
 				<td><button @click="fnRemove(item.stuNo)">삭제</button></td>
 			</tr>	
 		</table>
+		
+		<div class="pagination">
+		    <button v-if="currentPage > 1">이전</button>
+		    <button v-for="page in totalPages" :class="{active: page == currentPage}" @click="fnGetList(page)">
+		        {{ page }}
+		    </button>
+		    <button v-if="currentPage < totalPages">다음</button>
+		</div>
 	</div>
 </body>
 </html>
@@ -46,13 +99,24 @@
         data() {
             return {
 				list : [],
+				currentPage: 1,      
+				pageSize: 10,        
+				totalPages: 2,
+				selectSize : 10
+
 				
             };
         },
         methods: {
-            fnGetList(){
+            fnGetList(page){
 				var self = this;
+				self.pageSize = self.selectSize;
+				var startIndex = (page-1) * self.pageSize;
+				var outputNumber = self.pageSize;
+				self.currentPage = page;
 				var nparmap = {	
+					startIndex : startIndex,
+					outputNumber : outputNumber 
 		
 				};
 				$.ajax({
@@ -63,6 +127,7 @@
 					success : function(data) { 
 						console.log(data);
 						self.list = data.list;
+						self.totalPages = Math.ceil(data.count/self.pageSize)
 					}
 				});
             },
@@ -90,7 +155,7 @@
         },
         mounted() {
             var self = this;
-			self.fnGetList();
+			self.fnGetList(self.currentPage);
         }
     });
     app.mount('#app');

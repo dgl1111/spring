@@ -20,6 +20,8 @@ public interface BoardMapper {
 	//PK로 검색하면 1개. List로 감쌀 이유가 없다.
 	Board selectBoardInfo(HashMap<String, Object> map);
 	
+	int selectBoardListCnt(HashMap<String, Object> map);
+	
 	
 	
 	

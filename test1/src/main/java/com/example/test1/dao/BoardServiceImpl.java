@@ -22,7 +22,10 @@ public class BoardServiceImpl implements BoardService{
 		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		List<Board> list = boardMapper.selectBoardList(map);
+		int count = boardMapper.selectBoardListCnt(map);
+		
 		resultMap.put("list", list);
+		resultMap.put("count", count);
 		resultMap.put("result", "success");
 		
 		return resultMap;
@@ -76,5 +79,6 @@ public class BoardServiceImpl implements BoardService{
 		}
 		return resultMap;
 	}
+
 	
 }

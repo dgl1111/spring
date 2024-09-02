@@ -18,4 +18,7 @@ public interface SchoolMapper {
 	
 	School schoolStuInfo(HashMap<String, Object> map);
 	
+	int selectSchoolCnt(HashMap<String, Object> map);
+	
+	
 }

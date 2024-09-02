@@ -12,6 +12,9 @@
 			GRADE,
 			SUBSTR(JUMIN, 1, 6) || '-' || SUBSTR(JUMIN, 7, 1) || '******' AS JUMIN
 	    FROM STU 
+	    
+	    ORDER BY STUNO DESC
+		OFFSET #{startIndex} ROWS FETCH FIRST #{outputNumber} ROWS ONLY
 	</select>
 	
 	<select id="selectSchoolStu" parameterType="hashmap" resultType="com.example.test1.model.School">	
@@ -37,6 +40,11 @@
 			GRADE
 	    FROM STU
 	    WHERE STUNO = #{stuNo} 
+	</select>
+	
+	<select id="selectSchoolCnt" parameterType="hashmap" resultType="int">	
+		SELECT COUNT(*)
+		FROM STU
 	</select>
 
 </mapper>

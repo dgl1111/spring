@@ -58,7 +58,11 @@
             // fnSave 생성 후 board-add.dox 호출해서 저장
 			fnSave(){
 				var self = this;
-				var nparam = {title : self.title, contents : self.contents, userId : self.sessionId};
+				var nparam = {
+					title : self.title,
+					contents : self.contents,
+					userId : self.sessionId
+				};
 				$.ajax({
 					url:"board-add.dox",
 					dataType:"json",	
