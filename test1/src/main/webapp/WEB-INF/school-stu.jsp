@@ -6,6 +6,8 @@
 	<meta charset="UTF-8">
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
 	<title>첫번째 페이지</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 <style>
 	table {
@@ -57,12 +59,15 @@
 	}
 </style>
 <body>
+	
 	<div id="app">
+		<i class="fa-solid fa-magnifying-glass"></i>
 		<select v-model="selectSize" @change="fnGetList(1)">
 			<option value="5">5개씩</option>
 			<option value="10">10개씩</option>
 			<option value="20">20개씩</option>
 		</select>
+		<span class="material-symbols-outlined">search</span>
 
 		<table>
 			<tr>
@@ -86,7 +91,9 @@
 		
 		<div class="pagination">
 		    <button v-if="currentPage > 1">이전</button>
-		    <button v-for="page in totalPages" :class="{active: page == currentPage}" @click="fnGetList(page)">
+		    <button v-for="page in totalPages" 
+			:class="{active: page == currentPage}" 
+			@click="fnGetList(page)">
 		        {{ page }}
 		    </button>
 		    <button v-if="currentPage < totalPages">다음</button>

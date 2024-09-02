@@ -22,6 +22,7 @@ public interface BoardMapper {
 	
 	int selectBoardListCnt(HashMap<String, Object> map);
 	
+	List<Board> selectCommentList(HashMap<String, Object> map);
 	
 	
 	

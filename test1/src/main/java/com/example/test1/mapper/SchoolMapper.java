@@ -21,4 +21,6 @@ public interface SchoolMapper {
 	int selectSchoolCnt(HashMap<String, Object> map);
 	
 	
+	
+	
 }

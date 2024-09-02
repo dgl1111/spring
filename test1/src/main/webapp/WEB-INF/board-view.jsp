@@ -15,6 +15,7 @@
 		내용 : <div v-html="info.contents"></div>
 		작성자 : <span>{{info.userId}}</span>
 		<div v-if="sessionId == info.userId || sessionStatus == 'A'">
+		댓글목록 : <span>{{info.commentNo}}</span>
 			<button @click="fnRemove()">삭제</button>
 		</div>
 	</div>
