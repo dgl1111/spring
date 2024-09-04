@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.test1.mapper.BoardMapper;
 import com.example.test1.mapper.UserMapper;
 import com.example.test1.model.Board;
 import com.example.test1.model.User;
@@ -166,5 +165,36 @@ public class UserServiceImpl implements UserService {
 		return resultMap;
 
 		}
+
+	@Override
+	public HashMap<String, Object> addr(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			userMapper.insertAddr(map);
+			resultMap.put("result", "success");
+			resultMap.put("message", "등록되었습니다.");
+		} catch (Exception e) {
+			// TODO: handle exception
+			resultMap.put("result", "fail");
+			resultMap.put("message", "예기치 못한 문제가 발생했습니다. \n나중에 다시 시도해주세요.");
+		}
+		return resultMap;
+	}
+
+	@Override
+	public HashMap<String, Object> userIdCheck(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+		try {
+			User list = userMapper.userIdCheck(map);
+			resultMap.put("list", list); // 쿼리결과 list
+			resultMap.put("result", "success");
+
+		} catch (Exception e) {
+			resultMap.put("result", "fail");
+		}
+
+		return resultMap;
+	}
 	
 }

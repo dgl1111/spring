@@ -59,15 +59,15 @@
 	<div id="app">
 		
 		<div style="margin : 20px;"> 
-			도/시<select style="margin-right : 5px;" v-model="si" @change="fnArea()">
+			도/시<select style="margin-right : 5px;" v-model="si" @change="fnArea('gu')">
 				<option value="">:: 선택 ::</option>
 				<option v-for="item in siList" :value="item.si">{{item.si}}</option>
 			</select>
-            구/군<select style="margin-right : 5px;" v-model="gu" @change="fnArea()">
+            구/군<select style="margin-right : 5px;" v-model="gu" @change="fnArea('dong')">
 				<option value="">:: 선택 ::</option>
                 <option v-for="item in guList" :value="item.gu">{{item.gu}}</option>
 			</select>
-			동<select style="margin-right : 5px;" v-model="dong" @change="fnArea()">
+			동<select style="margin-right : 5px;" v-model="dong">
 				<option value="">:: 선택 ::</option>
                 <option v-for="item in dongList" :value="item.dong">{{item.dong}}</option>
 			</select>
@@ -93,17 +93,20 @@
             };
         },
         methods: {
-            fnArea(){
+            fnArea(loca){
 				var self = this;
-                if(self.si == "" || self.gu == ""){	//gu까지 선택하고 si를 다시 바꿨을때 gu가 초기화 된다.
-					self.dongList = [];  
-                }else if(self.si == ""){
-					self.guList = [];
+				if(loca == 'si'){
+					self.guList =[];
+					self.gu = "";
+					self.dongList = [];
+					self.dong = "";
 				}
-				
-				var nparmap = {si : self.si,
-								gu : self.gu,
-								dong : self.dong
+                
+				var nparmap = {
+					loca : loca,
+					si : self.si,
+					gu : self.gu,
+					dong : self.dong
 				};
 				$.ajax({
 					url:"area.dox",
@@ -112,13 +115,13 @@
 					data : nparmap,
 					success : function(data) { 
 						console.log(data);
-						if(self.si != "" && self.gu != ""){
-                            self.dongList = data.list;
-                        }else if(self.si != ""){
-                            self.guList = data.list;
-                        }else{
-                            self.siList = data.list;
-                        }
+						if(loca == "si"){
+							self.siList = data.list;
+						}else if(loca == "gu"){
+							self.guList = data.list;
+						}else{
+							self.dongList = data.list;
+						}
                         
 					}
 				});
@@ -126,7 +129,7 @@
         },
         mounted() {
             var self = this;
-			self.fnArea();
+			self.fnArea("si");
 			
         }
     });

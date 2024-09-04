@@ -1,5 +1,6 @@
 package com.example.test1.dao;
 
+import java.io.Console;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,13 +23,13 @@ public class AreaServiceImpl implements AreaService {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		List<Area> list = null;	
 		
-		if(!map.get("si").equals("") && !map.get("gu").equals("")) {
-			list = areaMapper.dongList(map);
-		}else if(!map.get("si").equals("")){
+		if(map.get("loca").equals("si")) {
+			list = areaMapper.siList(map);
+		}else if(map.get("loca").equals("gu")) {
 			list = areaMapper.guList(map);
 		}else {
-			list = areaMapper.siList(map);
-		};
+			list = areaMapper.dongList(map);
+		}
 		
 		
 		resultMap.put("list", list);

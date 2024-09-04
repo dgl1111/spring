@@ -21,5 +21,9 @@ public interface UserService {
 	
 	//사용자 로그인
 	HashMap<String, Object> login(HashMap<String, Object> map);
+	
+	HashMap<String, Object> addr(HashMap<String, Object> map);
+	
+	HashMap<String, Object> userIdCheck(HashMap<String, Object> map);
 
 }

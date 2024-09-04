@@ -29,6 +29,11 @@ public interface UserMapper {
 	
 	User userLogin(HashMap<String, Object> map);
 	
+	void insertAddr(HashMap<String, Object> map);
+	
+	User userIdCheck(HashMap<String, Object> map);
+	
+	
 	//검색결과가 여러개를 리턴받을떄는 List<>에 담아서 리턴
 	
 	//데이터를 호출하는 service

@@ -45,6 +45,18 @@ public class UserController {
         return "/join";	//확장자 생략
     }
 	
+	@RequestMapping("/jusoPopup.do") 
+	public String juso(Model model, @RequestParam HashMap<String, Object> map, HttpServletRequest request) throws Exception{
+		
+		return "/jusoPopup";
+	}
+	
+	@RequestMapping("/addr.do") 
+	public String addr(Model model, @RequestParam HashMap<String, Object> map, HttpServletRequest request) throws Exception{
+		
+		return "/join-btn";
+	}
+	
 	@RequestMapping(value = "/user-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String userList2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {	//map안에 keyword 담겨있다.
@@ -102,6 +114,9 @@ public class UserController {
         return "/user-view";
         //파라미터로 받은 값을 넘겨줘야 한다. jsp에도 쓸수있게 request 객체 만든다.
     }
+	
+	
+	
 
 }
 

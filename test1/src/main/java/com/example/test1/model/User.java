@@ -35,6 +35,6 @@ public class User {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	
+	private String addr;
 
 }

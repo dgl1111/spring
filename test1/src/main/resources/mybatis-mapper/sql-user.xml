@@ -56,5 +56,14 @@
 		USERID = #{id} AND PWD = #{pwd}
 	</select>
 	
+	<insert id="insertAddr" parameterType="hashmap">
+		INSERT INTO TBL_USER(addr) 
+		VALUES(#{addr})
+	</insert>
 	
+	<select id="userIdCheck" parameterType="hashmap" resultType="com.example.test1.model.User">	
+		SELECT * 
+		FROM TBL_USER 
+		WHERE 
+		USERID = #{userId}
 </mapper>	
