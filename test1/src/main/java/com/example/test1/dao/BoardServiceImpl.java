@@ -52,6 +52,8 @@ public class BoardServiceImpl implements BoardService{
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			boardMapper.insertBoard(map);
+			System.out.println(map);
+			resultMap.put("idx", map.get("boardNo"));
 			resultMap.put("result", "success");
 			resultMap.put("message", "등록되었습니다.");
 		} catch (Exception e) {
@@ -83,5 +85,14 @@ public class BoardServiceImpl implements BoardService{
 		return resultMap;
 	}
 
+	@Override
+	public HashMap<String, Object> addBoardFile(HashMap<String, Object> map) {
+		
+		boardMapper.insertBoardFile(map);
+			
+		return null;
+	}
+	
+	
 	
 }

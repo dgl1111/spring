@@ -11,6 +11,8 @@ public interface BoardService {
 	HashMap<String,Object> addBoard(HashMap<String,Object> map);
 	//게시글 상세보기
 	HashMap<String,Object> searchBoardInfo(HashMap<String,Object> map); //pk값 보내주려면 파라미터 필요.
+	//파일 업로드
+	HashMap<String,Object> addBoardFile(HashMap<String,Object> map);
 	
 	
 }

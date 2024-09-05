@@ -11,9 +11,14 @@
 </style>
 <body>
 	<div id="app">
-		제목 : {{info.title}}<br>
-		내용 : <div v-html="info.contents"></div>
+		제목 : {{info.title}}
+		<div>
+			내용 : <span v-html="info.contents"></span>
+		</div>
 		작성자 : <span>{{info.userId}}</span>
+		<div>
+			첨부파일 : {{info.file}}
+		</div>
 		<div v-if="sessionId == info.userId || sessionStatus == 'A'">
 		
 			<button @click="fnRemove()">삭제</button>

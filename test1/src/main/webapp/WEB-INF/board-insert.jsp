@@ -36,6 +36,10 @@
 				<td> <input id="title" type="text" placeholder="제목" v-model="title"></td>
 			</tr>
 			<tr>
+				<th>첨부파일</th>
+				<td><input id="file" type="file" @change="fnFileChange"></td>
+			</tr>
+			<tr>
 				<th>내용</th>
 				<td><div id="editor"></div></td>
 			</tr>
@@ -51,10 +55,14 @@
 				list : [],
 				title : "",
 				contents : "",
-				sessionId : '${sessionId}'
+				sessionId : '${sessionId}',
+				file : null
             };
         },
         methods: {
+			fnFileChange(event) {
+				this.file = event.target.files[0];	//1개일떄 0번째 
+			},
             // fnSave 생성 후 board-add.dox 호출해서 저장
 			fnSave(){
 				var self = this;
@@ -69,13 +77,32 @@
 					type : "POST", 
 					data : nparam,
 					success : function(data) { 
-						alert(data.message);
-						if(data.result == "success"){
-							location.href = "board-list.do"
-						}
-					}
-				});
+						var idx = data.idx;
+						console.log(idx);
+						//파일등록
+						if (self.file) {	//file이라는 값이 있을때만 실행
+							const formData = new FormData();
+							formData.append('file1', self.file);
+							formData.append('idx', idx);
+							console.log(idx);
+
+						$.ajax({
+							url: '/fileUpload.dox',
+							type: 'POST',
+							data: formData,
+							processData: false,  
+							contentType: false,  
+							success: function() {
+								console.log('업로드 성공!');
+							},
+							error: function(jqXHR, textStatus, errorThrown) {
+								console.error('업로드 실패!', textStatus, errorThrown);
+							}
+						});
 			}
+		}
+	});
+}
         },
         mounted() {
             var self = this;
