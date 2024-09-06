@@ -14,5 +14,7 @@ public interface BoardService {
 	//파일 업로드
 	HashMap<String,Object> addBoardFile(HashMap<String,Object> map);
 	
+	HashMap<String,Object> removeCheck(HashMap<String,Object> map);
+	
 	
 }

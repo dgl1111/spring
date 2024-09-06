@@ -81,6 +81,7 @@
 
 		<table>
 			<tr>
+				<th></th>
 				<th>게시글번호</th>
 				<th>제목</th>
 				<th>작성자</th>
@@ -89,6 +90,7 @@
 				<th>삭제</th>
 			</tr>
 			<tr v-for="item in list">
+				<td><input type="checkbox" v-model="selectItem" :value="item.boardNo"></td>
 				<td>{{item.boardNo}}</td>
 				<td><a href="javascript:;" @click="fnView(item.boardNo)">{{item.title}}</a></td>
 				<td><a href="javascript:;" @click="fnUserView(item.boardNo)">{{item.userName}}</a></td>
@@ -97,6 +99,7 @@
 				<td><button v-if="sessionEmail == item.email || sessionStatus == 'A'"  @click="fnRemove(item.boardNo)">삭제</button></td>
 			</tr>	
 		</table>
+		<button @click="fnCheckRemove">선택 삭제</button>
 		<div class="pagination">
 		    <button v-if="currentPage > 1">이전</button>
 		    <button v-for="page in totalPages" 
@@ -126,7 +129,8 @@
 				currentPage: 1, //현재 활성화 되는 페이지      
 				pageSize: 5,        
 				totalPages: 2,
-				selectSize : 5
+				selectSize : 5,
+				selectItem : []
 				
             };
         },
@@ -173,10 +177,32 @@
 					data : nparmap,
 					success : function(data) { 
 						alert(data.message);
-						self.fnGetList();
+						self.fnGetList(1);
 					}
 				});
 			},
+
+			fnCheckRemove(){
+				var self = this;
+				var fList = JSON.stringify(self.selectItem);
+				var nparmap = {
+					selectItem : fList,
+					testKey : "testValue",
+				};
+				$.ajax({
+					url:"check-remove.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						alert(data.result);
+						self.fnGetList(1); //1page로 가라
+					}
+				});
+			},
+
+
+
 			fnView(boardNo){
 				//key: boardNo, value : 내가 누른 게시글의 boardNo(pk)
 

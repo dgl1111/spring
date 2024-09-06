@@ -27,6 +27,8 @@ public interface BoardMapper {
 	//파일 업로드
 	void insertBoardFile(HashMap<String, Object> map);
 	
+	void deleteCheckBoard(HashMap<String, Object> map);
+	
 	
 	
 	
