@@ -21,7 +21,7 @@
 <body>
 	<div id="app">
 		<div style="margin: 10px;">
-		<input type="checkbox" value="10" v-model="">ACCOUNTING
+		<input type="checkbox" value="10">ACCOUNTING
 		<input type="checkbox" value="20">RESEARCH
 		<input type="checkbox" value="30">SALES
 		<input type="checkbox" value="40">OPERATIONS
@@ -48,11 +48,7 @@
         data() {
             return {
                 name : "홍길동",
-				list : [],
-				
-				
-				 
-				
+				list : []	
             };
         },
         methods: {

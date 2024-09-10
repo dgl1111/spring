@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.example.test1.mapper.ItemMapper">
+
+	<select id="selectCodeList" parameterType="hashmap" resultType="com.example.test1.model.Code">	
+		SELECT * 
+		FROM TBL_CODE 
+		WHERE KIND = 'ITEM1' 
+		ORDER BY CODE ASC 
+	</select>
+	
+	<select id="selectItemList" parameterType="hashmap" resultType="com.example.test1.model.Item">
+		SELECT * FROM TBL_ITEM I INNER JOIN TBL_CODE C ON C.CODE = I.CATEGORY1 AND C.KIND = 'ITEM1'
+	<if test="list != null">
+		WHERE CATEGORY1 IN
+		<foreach collection="list" item="item" open="(" close=")" separator=","> 
+			#{item}
+		</foreach>
+	</if>
+	</select>
+	
+</mapper>	

@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.test1.model.Emp;
+import com.example.test1.model.Item;
 import com.example.test1.model.Student;
 
 
@@ -20,6 +21,7 @@ public interface StudentMapper {
 	List<Emp> selectEmp();
 	
 	List<Student> selectSubject();
+
 	
 	//여러개를 리턴받을떄는 List<>에 담아서 리턴
 	

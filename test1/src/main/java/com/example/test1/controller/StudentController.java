@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.test1.dao.StudentService;
 import com.example.test1.model.Emp;
+import com.example.test1.model.Item;
 import com.example.test1.model.Student;
 import com.google.gson.Gson;
 
@@ -39,6 +40,7 @@ public class StudentController {
 
         return "/emp-list";
     }
+	
 	
 	@RequestMapping("/subject.do") 
     public String subject(Model model) throws Exception{
@@ -88,6 +90,9 @@ public class StudentController {
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
+	
+	
+
 	
 	@RequestMapping(value = "/sub-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody

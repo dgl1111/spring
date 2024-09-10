@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.example.test1.model.Emp;
+import com.example.test1.model.Item;
 import com.example.test1.model.Student;
 
 
@@ -18,5 +19,6 @@ public interface StudentService {
 	List<Emp> searchEmp();
 	
 	HashMap<String, Object> searchSubject();
+	
 
 }
