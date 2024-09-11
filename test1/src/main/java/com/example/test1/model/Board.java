@@ -16,11 +16,13 @@ public class Board {
 	private String tag2;
 	private String noticeYn;
 	private String cdateTime;
+	private String FORMATTED_CDATETIME;
 	private String udateTime;
 	private String email;
 	
 	private String commentNo;
 	private String pCommentNo;
+	private int CNT;
 	
 	private int fileNo;
 	public int getFileNo() {

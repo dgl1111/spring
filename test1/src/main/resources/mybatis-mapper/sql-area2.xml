@@ -1,0 +1,38 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.test1.mapper.AreaMapper2">
+	
+	
+	<select id="siList" parameterType="hashmap" resultType="com.example.test1.model.Area2">
+		SELECT SI
+		FROM AREA
+		GROUP BY SI
+		ORDER BY SI
+	</select>
+	
+	<select id="guList" parameterType="hashmap" resultType="com.example.test1.model.Area2">
+		SELECT SI, GU
+		FROM AREA
+		WHERE SI = #{si} AND GU IS NOT NULL
+		GROUP BY SI, GU
+		ORDER BY GU
+	</select>
+	
+	<select id="dongList" parameterType="hashmap" resultType="com.example.test1.model.Area2">
+		SELECT SI, GU, DONG
+		FROM AREA
+		WHERE SI = #{si} AND GU = #{gu} AND DONG IS NOT NULL
+		GROUP BY SI, GU, DONG
+		ORDER BY DONG
+	</select>
+	
+	<select id="nList" parameterType="hashmap" resultType="com.example.test1.model.Area2">
+		SELECT NX, NY
+		FROM AREA
+		WHERE SI = #{si} AND GU = #{gu} AND DONG = #{dong}
+	</select>
+	
+	
+
+
+</mapper>	

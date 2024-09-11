@@ -26,6 +26,11 @@ public class ItemController {
 
         return "/item-list";
     }
+	@RequestMapping("/api.do") 
+    public String api(Model model) throws Exception{
+
+        return "/api";
+    }
 	
 	@RequestMapping(value = "/item-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -51,5 +56,6 @@ public class ItemController {
 		
 		return new Gson().toJson(resultMap);
 	}
+	
 	
 }

@@ -92,7 +92,9 @@
 			<tr v-for="item in list">
 				<td><input type="checkbox" v-model="selectItem" :value="item.boardNo"></td>
 				<td>{{item.boardNo}}</td>
-				<td><a href="javascript:;" @click="fnView(item.boardNo)">{{item.title}}</a></td>
+				<td>
+					<a href="javascript:;" @click="fnView(item.boardNo)">{{item.title}}</a>
+				</td>
 				<td><a href="javascript:;" @click="fnUserView(item.boardNo)">{{item.userName}}</a></td>
 				<td>{{item.hit}}</td>
 				<td>{{item.cdateTime}}</td>
